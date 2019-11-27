@@ -6,7 +6,7 @@
 
 var mongoose = require('mongoose');
 config = {
-	mongoUrl:'mongodb://newdbforreact:newdbforreact1@ds217078.mlab.com:17078/newdbforreact'
+	mongoUrl:'mongodb://nfb:nfbnfb1@ds061797.mlab.com:61797/nfb'
 };
 
 //The server option auto_reconnect is defaulted to true
@@ -42,3 +42,8 @@ db.on('disconnected', function() {
 db.on('reconnected', function () {
 	console.info('Mongoose reconnected!');
 });
+
+
+// require('../app/models/user');
+// require('../app/models/task');
+// require

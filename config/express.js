@@ -1,9 +1,8 @@
 const express = require('express'),
 	bodyParser = require('body-parser'),
-    graphqlHttp = require('express-graphql');
-    
-	// graphQlSchema = require('../app/graphql/schema/index'),
-	// graphQlResolvers = require('../app/graphql/resolvers/index'),
+    graphqlHttp = require('express-graphql'),
+    graphQlSchema = require('../app/graphql/schema/index'),
+    graphQlResolvers = require('../app/graphql/resolvers/index');
 	// isAuth = require('../app/middleWre/is-auth');
 
 
@@ -31,11 +30,11 @@ module.exports = function() {
 
 	//app.use(isAuth);
 
-	// app.use('/graphql', bodyParser.json(),graphqlHttp({
-	// 	schema: graphQlSchema,
-	// 	rootValue: graphQlResolvers,
-	// 	graphiql: true
-	// }));
+	app.use('/graphql', bodyParser.json(),graphqlHttp({
+		schema: graphQlSchema,
+		rootValue: graphQlResolvers,
+		graphiql: true
+	}));
 
 
 	return app;
