@@ -6,6 +6,7 @@ const {getTasks, getMonthlyExpeneses, getMonthlyIncomes } = require('../resolver
 // The list of data loaders
 
 module.exports = {
+
     taskLoader: new DataLoader(taskIds => {
         return getTasks(taskIds)
     }),
@@ -17,6 +18,7 @@ module.exports = {
     monthlyIncomesLoader: new DataLoader( monthlyIncomesIds => {
         return getMonthlyIncomes(monthlyIncomesIds)
     })
+    
 }
 
 

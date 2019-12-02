@@ -7,9 +7,12 @@ const  { taskLoader, monthlyExpensesLoader, monthlyIncomesLoader } = require('..
 
 
 module.exports = {
-    getUser: async (args) => {
+    getUserDetails: async (args,req) => {
         try {
-            console.log('in grapghQL getUser funcion');
+            if(!req.isAuth) {
+                return new Error("Unauthenticated")
+            }
+            console.log('in grapghQL getUserDetails funcion');
             //const user = await User.findOne({ email: args.email }).populate('expectedExpenses')
             const user = await User.findById('5dd8fad0f2cf5a925104b905').populate('expectedExpenses')
             console.log('User.findOne', user);
@@ -59,25 +62,26 @@ module.exports = {
             console.log(err);
             throw err
         }
-    },
-    // we can use also - login: async ({email, password}) => {
-    login: async (args) => {
-        // console.log("in login function the args are", args)
-        const user = await User.findOne({email: args.email})
-        if(!user) {
-            throw new Error("User does not exist")
-        };
-        const isEqual = await bcrypt.compare(args.password, user.password)
-        if(!isEqual) {
-            throw new Error("invalid credentials")
-        }
-        const token = jwt.sign({userId: user.id, email: user.email}, 'somesupersecretkey', {
-            expiresIn: '1h'
-        });
-        return {
-            userId: user.id,
-            token: token,
-            tokenEcpiration: 1
-        }
     }
+    // ,
+    // // we can use also - login: async ({email, password}) => {
+    // login: async (args) => {
+    //     // console.log("in login function the args are", args)
+    //     const user = await User.findOne({email: args.email})
+    //     if(!user) {
+    //         throw new Error("User does not exist")
+    //     };
+    //     const isEqual = await bcrypt.compare(args.password, user.password)
+    //     if(!isEqual) {
+    //         throw new Error("invalid credentials")
+    //     }
+    //     const token = jwt.sign({userId: user.id, email: user.email}, 'somesupersecretkey', {
+    //         expiresIn: '1h'
+    //     });
+    //     return {
+    //         userId: user.id,
+    //         token: token,
+    //         tokenEcpiration: 1
+    //     }
+    // }
 }

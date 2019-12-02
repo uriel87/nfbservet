@@ -3,9 +3,8 @@ const express = require('express'),
     graphqlHttp = require('express-graphql'),
     graphQlSchema = require('../app/graphql/schema/index'),
     graphQlResolvers = require('../app/graphql/resolvers/index');
-	// isAuth = require('../app/middleWre/is-auth');
-
-
+    isAuth = require('../app/middleware/is-auth');
+    
 
 module.exports = function() {
 
@@ -28,7 +27,7 @@ module.exports = function() {
     app.use(bodyParser.json()); // for parsing application/json
     app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-	//app.use(isAuth);
+    app.use(isAuth);
 
 	app.use('/graphql', bodyParser.json(),graphqlHttp({
 		schema: graphQlSchema,

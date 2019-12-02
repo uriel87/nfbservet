@@ -12,7 +12,7 @@ type User {
     taskList: [Task]
     monthlyExpensesList:[MonthlyExpenses]
     monthlyIncomesList: [MonthlyIncomes]
-    expectedExpenses: expectedExpenses
+    expectedExpenses: ExpectedExpenses
 }
 
 
@@ -82,7 +82,7 @@ type MonthlyIncomes {
 }
 
 
-type expectedExpenses {
+type ExpectedExpenses {
     _id: ID!
     groceries: Int,
     car: Int,
@@ -92,6 +92,8 @@ type expectedExpenses {
     devices: Int,
     clothings: Int,
     other: Int,
+    year: Int,
+    month: Int
 }
 
 
@@ -103,7 +105,7 @@ type AuthData {
 
 
 
-input UserInput {
+input CreateUserInput {
     name: String!
     password: String!
     email: String!
@@ -111,7 +113,7 @@ input UserInput {
 }
 
 
-input TaskInput {
+input CreateTaskInput {
     name: String!
     description: String!
     category: TaskCategory!
@@ -154,19 +156,58 @@ input ExpectedExpensesInput {
     other: Int,
 }
 
+input ExpectedExpensesDateInput {
+    year: Int
+    month: Int
+}
+
+
+input EditTaskInput {
+    id: ID!
+    name: String!
+    description: String!
+    category: TaskCategory!
+    priority: Priority!
+    startTime: String!
+    endTime: String!
+    daily: Boolean!
+}
+
+input EditeMonthlyExpensesInput {
+    id: ID!
+    name: String!
+    description: String!
+    amount: Int!
+    category: MonthlyExpensesCategory!
+    payment: Int!
+    paymentLeft: Int
+}
+
+input EditMonthlyIncomesInput {
+    id: ID!
+    name: String,
+    description: String,
+    amount: Int,
+    monthly: Boolean,
+}
+
 
 type rootQuery {
-    getUser(email: String!): User!
+    getUserDetails(email: String!): User!
     login(email: String!, password: String!): AuthData!
     getMonthlyExpenses(monthlyExpensesDateInput: MonthlyExpensesDateInput): [MonthlyExpenses]
+    getExpectedExpenses(expectedExpensesDateInput: ExpectedExpensesDateInput): [ExpectedExpenses]
 }
 
 type rootMutation {
-    createUser(userInput: UserInput): User
-    createTask(taskInput: TaskInput): Task
+    createUser(userInput: CreateUserInput): User
+    createTask(taskInput: CreateTaskInput): Task
     createMonthlyExpenses(monthlyExpenesInput: MonthlyExpensesInput): MonthlyExpenses
     createMonthlyIncomes(monthlyIncomesInput: MonthlyIncomesInput): MonthlyIncomes
-    createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): expectedExpenses
+    createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): ExpectedExpenses
+    editTask(editTask: EditTaskInput): Task
+    editMonthlyExpenses(editMonthlyExpensesInput: EditeMonthlyExpensesInput): MonthlyExpenses
+    editMonthlyIncomes(editMonthlyIncomesInput: EditMonthlyIncomesInput): MonthlyIncomes
 }
 
 schema {

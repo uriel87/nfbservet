@@ -26,7 +26,7 @@ module.exports = {
             if(!user) {
                 throw new Error("createMonthlyIncomes function - User didn't found")
             }
-            
+
             user.monthlyIncomesList.push(NewMonthlyIncomes)
             await user.save()
             return NewMonthlyIncomes
@@ -35,7 +35,22 @@ module.exports = {
             console.log("Error in function createMonthlyIncomes", err)
             throw err
         }
-
+    },
+    editMonthlyIncomes: async(args) => {
+        console.log("args in editMonthlyIncomes", args)
+        try{
+            const updateMonthlyIncomes = {
+                name: args.editMonthlyIncomesInput.name,
+                description: args.editMonthlyIncomesInput.description,
+                amount: args.editMonthlyIncomesInput.amount,
+                monthly: args.editMonthlyIncomesInput.monthly,
+            }
+            const monthlyIncomes = await MonthlyIncomes.findOneAndUpdate(args.id, updateMonthlyIncomes, {new: true})
+            console.log("in function editMonthlyIncomes", monthlyIncomes)
+            return monthlyIncomes
+        } catch(err) {
+            console.log("Error in function editMonthlyIncomes", err)
+            throw err
+        }
     }
-
 }

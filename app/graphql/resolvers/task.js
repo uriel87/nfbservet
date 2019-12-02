@@ -34,12 +34,32 @@ module.exports = {
             user.taskList.push(newTask)
             await user.save()
 
-            console.log("userResult", user)
+            console.log("user in function createTask", user)
 
             return newTask
             
         } catch(err) {
             console.log("Error in function createTask", err)
+            throw err
+        }
+    },
+    editTask: async(args) => {
+        console.log("args in editTask", args)
+        try{
+            const updateTask = {
+                name: args.editTask.name,
+                description: args.editTask.description,
+                category: args.editTask.category,
+                priority: args.editTask.priority,
+                startTime: args.editTask.startTime,
+                endTime: args.editTask.endTime,
+                daily: args.editTask.daily 
+            }
+            const task = await Task.findOneAndUpdate(args.id, updateTask, {new: true})
+            console.log("in function editTask", task)
+            return task
+        } catch(err) {
+            console.log("Error in function editTask", err)
             throw err
         }
     }

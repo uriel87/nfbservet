@@ -51,7 +51,7 @@ module.exports = {
                 'year': args.monthlyExpensesDateInput.year || new Date().getFullYear(),
                 'month': args.monthlyExpensesDateInput.month || new Date().getMonth() + 1
             }
-            
+
             const monthlyExpectedDates = await MonthlyExpenses.find(selectedDate);
             return monthlyExpectedDates;
 
@@ -59,8 +59,25 @@ module.exports = {
             console.log("Error in function getMonthlyExpenses", err)
             throw err
         }
-        
-
-
+    },
+    editMonthlyExpenses: async(args) => {
+        console.log("args in editMonthlyExpenses", args)
+        try{
+            const updateMonthlyExpenes = {
+                name: args.editMonthlyExpensesInput.name,
+                description: args.editMonthlyExpensesInput.description,
+                amount: args.editMonthlyExpensesInput.amount,
+                category: args.editMonthlyExpensesInput.category,
+                payment: args.editMonthlyExpensesInput.payment,
+                paymentLeft: args.editMonthlyExpensesInput.paymentLeft,
+            }
+            const monthlyExpenes = await MonthlyExpenses.findOneAndUpdate(args.id, updateMonthlyExpenes, {new: true})
+            console.log("in function editMonthlyExpenses", monthlyExpenes)
+            return monthlyExpenes
+        } catch(err) {
+            console.log("Error in function editMonthlyExpenses", err)
+            throw err
+        }
     }
+
 }

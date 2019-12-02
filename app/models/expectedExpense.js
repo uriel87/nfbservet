@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 
 
 const expectedExpenses = new schema({
-    user: {
+    userId: {
         type: schema.Types.ObjectId,
         ref: 'User'
     },
@@ -17,6 +17,8 @@ const expectedExpenses = new schema({
     devices: Number,
     clothings: Number,
     other: Number,
+    year: Number,
+    month: Number
 }, {collection: 'expectedExpenses'})
 
 
