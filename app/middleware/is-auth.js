@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 module.exports = (req, res, next) => {
     const authHedear = req.get("Authorization")
     console.log("authHedear in Authorization", authHedear)
+    console.log("authHedear in req.body", req.body)
     if(!authHedear) {
         req.isAuth = false;
         return next();
@@ -21,7 +22,7 @@ module.exports = (req, res, next) => {
     let decodedToken
 
     try {
-        decodedToken = jwt.verify(token, 'somesupersecretkey')
+        decodedToken = jwt.verify(token, 'nfbsecretkey')
         console.log("decodedToken in Authorization", decodedToken)
 
     } catch(err) {

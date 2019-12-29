@@ -103,7 +103,10 @@ type AuthData {
     tokenEcpiration: Int!
 }
 
-
+input LoginInput {
+    email: String!
+    password: String!
+}
 
 input CreateUserInput {
     name: String!
@@ -132,7 +135,7 @@ input MonthlyExpensesInput {
     paymentLeft: Int
 }
 
-input MonthlyExpensesDateInput {
+input DateInput {
     year: Int
     month: Int
 }
@@ -154,11 +157,6 @@ input ExpectedExpensesInput {
     devices: Int,
     clothings: Int,
     other: Int,
-}
-
-input ExpectedExpensesDateInput {
-    year: Int
-    month: Int
 }
 
 
@@ -194,13 +192,15 @@ input EditMonthlyIncomesInput {
 
 type rootQuery {
     getUserDetails(email: String!): User!
-    login(email: String!, password: String!): AuthData!
-    getMonthlyExpenses(monthlyExpensesDateInput: MonthlyExpensesDateInput): [MonthlyExpenses]
-    getExpectedExpenses(expectedExpensesDateInput: ExpectedExpensesDateInput): [ExpectedExpenses]
+    login(loginInput: LoginInput): AuthData!
+    getMonthlyExpenses(monthlyExpensesDateInput: DateInput): [MonthlyExpenses]
+    getExpectedExpenses(expectedExpensesDateInput: DateInput): [ExpectedExpenses]
+    getMonthlyIncomes(monthlyIncomesDateInput: DateInput): [MonthlyIncomes]
+
 }
 
 type rootMutation {
-    createUser(userInput: CreateUserInput): User
+    createUser(userInput: CreateUserInput): AuthData
     createTask(taskInput: CreateTaskInput): Task
     createMonthlyExpenses(monthlyExpenesInput: MonthlyExpensesInput): MonthlyExpenses
     createMonthlyIncomes(monthlyIncomesInput: MonthlyIncomesInput): MonthlyIncomes

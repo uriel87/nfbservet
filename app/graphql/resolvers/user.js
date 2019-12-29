@@ -38,10 +38,11 @@ module.exports = {
         try {
             const userById = await User.findOne({email: args.userInput.email})
             if(userById) {
-                throw new Error("user exsits already")
+                return new Error("user exsits already")
             }
 
             const hashPassword = await bcrypt.hash(args.userInput.password,12);
+
 
             const user = new User({
                 name: args.userInput.name,
@@ -51,11 +52,16 @@ module.exports = {
             });
 
             const userResult = await user.save()
-            console.log("userResult", userResult)
+            const token = jwt.sign({userId: userResult._id, email: userResult.email}, 'nfbsecretkey', {
+                expiresIn: '1h'
+            });
+
             return {
                 ...userResult._doc,
                 password: null,
-                _id: userResult.id
+                userId: userResult.id,
+                token: token,
+                tokenEcpiration: 1
             }
             
         } catch(err) {
@@ -75,7 +81,7 @@ module.exports = {
     //     if(!isEqual) {
     //         throw new Error("invalid credentials")
     //     }
-    //     const token = jwt.sign({userId: user.id, email: user.email}, 'somesupersecretkey', {
+    //     const token = jwt.sign({userId: user.id, email: user.email}, 'nfbsecretkey', {
     //         expiresIn: '1h'
     //     });
     //     return {

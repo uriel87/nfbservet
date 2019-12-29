@@ -36,6 +36,25 @@ module.exports = {
             throw err
         }
     },
+    getMonthlyIncomes: async (args) => {
+        console.log("args in getMonthlyIncomes", args)
+        try {
+
+            selectedDate = {
+                'year': args.monthlyIncomesDateInput.year || new Date().getFullYear(),
+                'month': args.monthlyIncomesDateInput.month || new Date().getMonth() + 1
+            }
+
+            const monthlyIncomesDates = await MonthlyIncomes.find(selectedDate);
+            console.log("monthlyIncomesDates in getMonthlyIncomes", monthlyIncomesDates)
+
+            return monthlyIncomesDates;
+
+        } catch(err) {
+            console.log("Error in function getMonthlyIncomes", err)
+            throw err
+        }
+    },
     editMonthlyIncomes: async(args) => {
         console.log("args in editMonthlyIncomes", args)
         try{

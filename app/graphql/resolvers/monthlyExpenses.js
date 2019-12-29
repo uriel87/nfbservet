@@ -48,9 +48,10 @@ module.exports = {
         try {
 
             selectedDate = {
-                'year': args.monthlyExpensesDateInput.year || new Date().getFullYear(),
-                'month': args.monthlyExpensesDateInput.month || new Date().getMonth() + 1
+                'year': args.DateInput.year || new Date().getFullYear(),
+                'month': args.DateInput.month || new Date().getMonth() + 1
             }
+            console.log("selectedDate in createIncome", selectedDate.year)
 
             const monthlyExpectedDates = await MonthlyExpenses.find(selectedDate);
             return monthlyExpectedDates;

@@ -56,8 +56,8 @@ module.exports = {
         try {
 
             selectedDate = {
-                'year': args.expectedExpensesDateInput.year || new Date().getFullYear(),
-                'month': args.expectedExpensesDateInput.month || new Date().getMonth() + 1
+                'year': args.DateInput.year || new Date().getFullYear(),
+                'month': args.DateInput.month || new Date().getMonth() + 1
             }
 
             const expectedExpensesDates = await ExpectedExpenses.find(selectedDate);
