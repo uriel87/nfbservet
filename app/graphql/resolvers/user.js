@@ -8,13 +8,23 @@ const  { taskLoader, monthlyExpensesLoader, monthlyIncomesLoader } = require('..
 
 module.exports = {
     getUserDetails: async (args,req) => {
+
+        // console.log("getUserDetails - req", req.body.headers.Authorization)
+        // console.log("getUserDetails - req.isAuth", req.isAuth)
+        // console.log("getUserDetails - req.userId", req.userId)
+        // console.log("getUserDetails - args", args)
+        const authorization = req.body.headers.Authorization
+
+
         try {
-            if(!req.isAuth) {
-                return new Error("Unauthenticated")
-            }
+            // if(!req.isAuth) {
+            //     return new Error("Unauthenticated")
+            // }
             console.log('in grapghQL getUserDetails funcion');
+            console.log('in grapghQL getUserDetails funcion - req.userId', req.userId);
+
             //const user = await User.findOne({ email: args.email }).populate('expectedExpenses')
-            const user = await User.findById('5dd8fad0f2cf5a925104b905').populate('expectedExpenses')
+            const user = await User.findById(req.userId).populate('expectedExpenses')
             console.log('User.findOne', user);
 
             return {

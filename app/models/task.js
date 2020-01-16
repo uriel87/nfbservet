@@ -29,7 +29,7 @@ const taskSchema = new schema( {
 
     endTime: String,
 
-    CreateTime: String,
+    createTime: String,
 
     daily: { type: Boolean, default: false }
 

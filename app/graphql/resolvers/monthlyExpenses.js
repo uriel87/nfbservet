@@ -43,17 +43,21 @@ module.exports = {
         }
 
     },
-    getMonthlyExpenses: async (args) => {
-        console.log("args in createIncome", args)
+    getMonthlyExpenses: async (args,req) => {
+        console.log("args in getMonthlyExpenses", args)
+        console.log("args in getMonthlyExpenses - year", args.monthlyExpensesDateInput.year)
+        console.log("args in getMonthlyExpenses - month", args.monthlyExpensesDateInput.month)
+        console.log("args in getMonthlyExpenses - req.userId", req.userId)
+
         try {
 
             selectedDate = {
-                'year': args.DateInput.year || new Date().getFullYear(),
-                'month': args.DateInput.month || new Date().getMonth() + 1
+                user: req.userId,
+                year: args.monthlyExpensesDateInput.year || new Date().getFullYear(),
+                month: args.monthlyExpensesDateInput.month || new Date().getMonth() + 1
             }
-            console.log("selectedDate in createIncome", selectedDate.year)
-
             const monthlyExpectedDates = await MonthlyExpenses.find(selectedDate);
+            console.log("monthlyExpectedDates in createIncome", monthlyExpectedDates)
             return monthlyExpectedDates;
 
         } catch(err) {

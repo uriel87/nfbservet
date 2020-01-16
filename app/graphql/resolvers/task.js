@@ -20,7 +20,7 @@ module.exports = {
                 priority: args.taskInput.priority,
                 startTime: args.taskInput.startTime,
                 endTime: args.taskInput.endTime,
-                CreateTime: new Date().toISOString(),
+                createTime: new Date().toISOString(),
                 daily: args.taskInput.daily 
             })
 

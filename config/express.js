@@ -31,14 +31,13 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
     app.use(isAuth);
+    //console.log("is express.js - is Auth", isAuth)
 
 	app.use('/graphql', bodyParser.json(),graphqlHttp({
 		schema: graphQlSchema,
 		rootValue: graphQlResolvers,
 		graphiql: true
     }));
-
-    console.log("var app = express();")
     
 	return app;
 };

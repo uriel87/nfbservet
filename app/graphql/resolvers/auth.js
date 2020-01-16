@@ -9,7 +9,7 @@ module.exports = {
     login: async (args) => {
         console.log("in login function the args are", args)
         const user = await User.findOne({email: args.loginInput.email})
-        console.log("in login function the user are", user)
+        // console.log("in login function the user are", user)
         if(!user) {
             throw new Error("invalid credentials")
         };

@@ -50,7 +50,7 @@ type Task {
     description: String
     startTime: String
     endTime: String
-    CreateTime: String
+    createTime: String
     daily: Boolean
 }
 
@@ -191,12 +191,11 @@ input EditMonthlyIncomesInput {
 
 
 type rootQuery {
-    getUserDetails(email: String!): User!
+    getUserDetails(id: ID!): User!
     login(loginInput: LoginInput): AuthData!
     getMonthlyExpenses(monthlyExpensesDateInput: DateInput): [MonthlyExpenses]
     getExpectedExpenses(expectedExpensesDateInput: DateInput): [ExpectedExpenses]
     getMonthlyIncomes(monthlyIncomesDateInput: DateInput): [MonthlyIncomes]
-
 }
 
 type rootMutation {
