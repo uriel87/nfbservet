@@ -24,7 +24,6 @@ module.exports = {
         }
     },
 
-
     getMonthlyExpeneses: async monthlyExpenesIds => {
         console.log("args in getmonthlyExpeneses merge", monthlyExpenesIds)
 
@@ -39,7 +38,6 @@ module.exports = {
         }
     },
 
-
     getMonthlyIncomes: async monthlyIncomesIds => {
         console.log("args in getMonthlyIncomes merge", monthlyIncomesIds)
 
@@ -53,7 +51,6 @@ module.exports = {
             throw err
         }
     },
-
 
     getExpextedExpenses: async expectedExpensesId => {
         console.log("args in getExpextedExpenses merge", expectedExpensesId)

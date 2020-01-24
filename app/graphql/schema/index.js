@@ -81,6 +81,10 @@ type MonthlyIncomes {
     month: Int
 }
 
+type monthlyExpensesList {
+    monthlyExpensesList:[MonthlyExpenses]
+}
+
 
 type ExpectedExpenses {
     _id: ID!
@@ -100,7 +104,7 @@ type ExpectedExpenses {
 type AuthData {
     userId: ID!
     token: String!
-    tokenEcpiration: Int!
+    tokenExpiration: Int!
 }
 
 input LoginInput {
@@ -191,7 +195,7 @@ input EditMonthlyIncomesInput {
 
 
 type rootQuery {
-    getUserDetails(id: ID!): User!
+    getUserDetails: User!
     login(loginInput: LoginInput): AuthData!
     getMonthlyExpenses(monthlyExpensesDateInput: DateInput): [MonthlyExpenses]
     getExpectedExpenses(expectedExpensesDateInput: DateInput): [ExpectedExpenses]
@@ -215,3 +219,10 @@ schema {
 }
 
 `)
+
+
+
+// type rootQuery {
+//     getMonthlyExpensesUser: User
+// }
+

@@ -8,14 +8,7 @@ const  { taskLoader, monthlyExpensesLoader, monthlyIncomesLoader } = require('..
 
 module.exports = {
     getUserDetails: async (args,req) => {
-
-        // console.log("getUserDetails - req", req.body.headers.Authorization)
-        // console.log("getUserDetails - req.isAuth", req.isAuth)
-        // console.log("getUserDetails - req.userId", req.userId)
-        // console.log("getUserDetails - args", args)
         const authorization = req.body.headers.Authorization
-
-
         try {
             // if(!req.isAuth) {
             //     return new Error("Unauthenticated")
@@ -71,7 +64,7 @@ module.exports = {
                 password: null,
                 userId: userResult.id,
                 token: token,
-                tokenEcpiration: 1
+                tokenExpiration: 1
             }
             
         } catch(err) {
@@ -79,25 +72,10 @@ module.exports = {
             throw err
         }
     }
-    // ,
-    // // we can use also - login: async ({email, password}) => {
-    // login: async (args) => {
-    //     // console.log("in login function the args are", args)
-    //     const user = await User.findOne({email: args.email})
-    //     if(!user) {
-    //         throw new Error("User does not exist")
-    //     };
-    //     const isEqual = await bcrypt.compare(args.password, user.password)
-    //     if(!isEqual) {
-    //         throw new Error("invalid credentials")
-    //     }
-    //     const token = jwt.sign({userId: user.id, email: user.email}, 'nfbsecretkey', {
-    //         expiresIn: '1h'
-    //     });
-    //     return {
-    //         userId: user.id,
-    //         token: token,
-    //         tokenEcpiration: 1
-    //     }
-    // }
 }
+
+
+// console.log("getUserDetails - req", req.body.headers.Authorization)
+// console.log("getUserDetails - req.isAuth", req.isAuth)
+// console.log("getUserDetails - req.userId", req.userId)
+// console.log("getUserDetails - args", args)

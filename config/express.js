@@ -1,5 +1,5 @@
 const express = require('express'),
-	bodyParser = require('body-parser'),
+    bodyParser = require('body-parser'),
     graphqlHttp = require('express-graphql'),
     graphQlSchema = require('../app/graphql/schema/index'),
     graphQlResolvers = require('../app/graphql/resolvers/index');
@@ -8,10 +8,8 @@ const express = require('express'),
 
 module.exports = function() {
 
-	var app = express();
-
-	const users = [];
-
+    var app = express();
+    
     app.use(function(req, res, next) {
         console.log("req.method", req.method)
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -31,7 +29,6 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
     app.use(isAuth);
-    //console.log("is express.js - is Auth", isAuth)
 
 	app.use('/graphql', bodyParser.json(),graphqlHttp({
 		schema: graphQlSchema,

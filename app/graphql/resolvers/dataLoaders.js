@@ -1,6 +1,6 @@
 
 const DataLoader = require('dataloader');
-const {getTasks, getMonthlyExpeneses, getMonthlyIncomes } = require('../resolvers/mrege')
+const {getTasks, getMonthlyExpeneses, getMonthlyIncomes, getMonthlyExpenesesByDate } = require('../resolvers/mrege')
 
 
 // The list of data loaders

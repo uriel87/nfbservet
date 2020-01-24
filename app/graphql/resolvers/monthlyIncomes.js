@@ -48,7 +48,11 @@ module.exports = {
             const monthlyIncomesDates = await MonthlyIncomes.find(selectedDate);
             console.log("monthlyIncomesDates in getMonthlyIncomes", monthlyIncomesDates)
 
-            return monthlyIncomesDates;
+            //return ...monthlyIncomesDates.doc;
+
+            return {
+                ...monthlyIncomesDates._doc,
+            }
 
         } catch(err) {
             console.log("Error in function getMonthlyIncomes", err)

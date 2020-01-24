@@ -3,9 +3,6 @@ const jwt = require('jsonwebtoken')
 
 
 module.exports = (req, res, next) => {
-    //const authHedear = req.get("Authorization")
-    //console.log("authHedear in Authorization token:", authHedear)
-    console.log("req in Authorization token:", req)
     let authHedear = req.body.headers.Authorization
 
     if(!authHedear) {
@@ -14,7 +11,6 @@ module.exports = (req, res, next) => {
     }
 
     const token = authHedear
-    console.log("token in Authorization - is-auth.js", token)
 
     if(!token || token === '') {
         req.isAuth = false;
@@ -36,21 +32,19 @@ module.exports = (req, res, next) => {
         req.isAuth = false;
         return next();
     }
-
-    
-    //console.log("req in Authorization finishe", req)
-
     
     req.isAuth = true
     req.userId = decodedToken.userId
-    console.log("req in Authorization - req.isAuth", req.isAuth)
-    console.log("req in Authorization - req.userId", req.userId)
-
-    // return {
-    //     isAuth: req.isAuth,
-    //     userId: req.userId
-    // }
-
 
     next()
 }
+
+// console.log("req in Authorization - req.isAuth", req.isAuth)
+// console.log("req in Authorization - req.userId", req.userId)
+//const authHedear = req.get("Authorization")
+//console.log("authHedear in Authorization token:", authHedear)
+//console.log("req in Authorization token:", req.body.headers)
+// return {
+//     isAuth: req.isAuth,
+//     userId: req.userId
+// }
