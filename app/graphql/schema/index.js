@@ -23,16 +23,7 @@ enum TaskCategory {
     OTHER
 }
 
-enum MonthlyExpensesCategory {
-    GROCERIES
-    CAR
-    BILLS
-    FUN
-    EDUCATION
-    DEVICES
-    CLOTHINGS
-    OTHER
-}
+
 
 enum Priority {
     LOW
@@ -60,7 +51,7 @@ type MonthlyExpenses {
     name: String
     description: String
     amount: Int
-    category: MonthlyExpensesCategory
+    category: String
     payment: Int
     paymentLeft: Int
     purchaseTime: String
@@ -134,7 +125,7 @@ input MonthlyExpensesInput {
     name: String!
     description: String!
     amount: Int!
-    category: MonthlyExpensesCategory!
+    category: String!
     payment: Int!
     paymentLeft: Int
 }
@@ -180,7 +171,7 @@ input EditeMonthlyExpensesInput {
     name: String!
     description: String!
     amount: Int!
-    category: MonthlyExpensesCategory!
+    category: String!
     payment: Int!
     paymentLeft: Int
 }
@@ -224,5 +215,17 @@ schema {
 
 // type rootQuery {
 //     getMonthlyExpensesUser: User
+// }
+
+
+// enum MonthlyExpensesCategory {
+//     GROCERIES
+//     CAR
+//     BILLS
+//     FUN
+//     EDUCATION
+//     DEVICES
+//     CLOTHINGS
+//     OTHER
 // }
 

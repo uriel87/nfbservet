@@ -5,12 +5,12 @@ bcrypt = require('bcryptjs')
 
 
 module.exports = {
-    login: async (args) => {
-        const user = await User.findOne({email: args.loginInput.email})
+    login: async (args, req) => {
+        const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
         if(!user) {
             throw new Error("invalid credentials")
         };
-        const isEqual = await bcrypt.compare(args.loginInput.password, user.password)
+        const isEqual = await bcrypt.compare(req.body.variables.password, user.password)
 
         if(!isEqual || !user) {
             throw new Error("invalid credentials")

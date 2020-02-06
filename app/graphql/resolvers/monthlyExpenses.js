@@ -3,23 +3,40 @@ var mongoose = require("mongoose")
 User = require('../../models/user')
 MonthlyExpenses = require('../../models/monthlyExpenses')
 const DataLoader = require('dataloader')
+
 const { taskLoader, monthlyExpensesLoader, monthlyIncomesLoader, monthlyExpensesByDateLoader } = require('../resolvers/dataLoaders');
 
 
 
 module.exports = {
-    createMonthlyExpenses: async (args) => {
+    createMonthlyExpenses: async (args, req) => {
         console.log("args in createMonthlyExpenes", args)
+        console.log("req.body in createMonthlyExpenes", req.body)
+        userId = req.body.userId
 
         try {
+
+            // const monthlyExpenes = new MonthlyExpenses({
+            //     user: mongoose.Types.ObjectId(req.userId),
+            //     name: args.monthlyExpenesInput.name,
+            //     description: args.monthlyExpenesInput.description,
+            //     amount: args.monthlyExpenesInput.amount,
+            //     category: args.monthlyExpenesInput.category,
+            //     payment: args.monthlyExpenesInput.payment || 1,
+            //     paymentLeft: args.monthlyExpenesInput.payment,
+            //     purchaseTime: new Date().toISOString(),
+            //     year: new Date().getFullYear(),
+            //     month: new Date().getMonth() + 1
+            // })
+
             const monthlyExpenes = new MonthlyExpenses({
-                user: mongoose.Types.ObjectId('5dd8fad0f2cf5a925104b905'),
-                name: args.monthlyExpenesInput.name,
-                description: args.monthlyExpenesInput.description,
-                amount: args.monthlyExpenesInput.amount,
-                category: args.monthlyExpenesInput.category,
-                payment: args.monthlyExpenesInput.payment,
-                paymentLeft: args.monthlyExpenesInput.paymentLeft,
+                user: mongoose.Types.ObjectId(userId),
+                name: req.body.variables.name,
+                description: req.body.variables.description,
+                amount: req.body.variables.amount,
+                category: req.body.variables.category,
+                payment: req.body.variables.payment || 1,
+                paymentLeft: req.body.variables.payment,
                 purchaseTime: new Date().toISOString(),
                 year: new Date().getFullYear(),
                 month: new Date().getMonth() + 1
@@ -27,7 +44,10 @@ module.exports = {
 
             const NewMonthlyExpenes = await monthlyExpenes.save()
 
-            const user = await User.findById('5dd8fad0f2cf5a925104b905')
+            const user = await User.findById(userId)
+            //const user = await User.findById("5dd8fad0f2cf5a925104b905")
+
+            
             if (!user) {
                 throw new Error("createMonthlyExpenes function - User didn't found")
             }
