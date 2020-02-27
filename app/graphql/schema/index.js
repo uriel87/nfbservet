@@ -207,7 +207,7 @@ type rootMutation {
     createMonthlyIncomes(monthlyIncomesInput: MonthlyIncomesInput): MonthlyIncomes
     createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): ExpectedExpenses
     updateTask(UpdateTask: UpdateTaskInput): Task
-    editUser(updateUserInput: UpdateUserInput): AuthData
+    updateUser(updateUserInput: UpdateUserInput): AuthData
     editMonthlyExpenses(editMonthlyExpensesInput: EditeMonthlyExpensesInput): MonthlyExpenses
     editMonthlyIncomes(editMonthlyIncomesInput: EditMonthlyIncomesInput): MonthlyIncomes
 }

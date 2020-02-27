@@ -60,11 +60,10 @@ module.exports = {
             console.log(err);
             throw err
         }
-    }, editUser: async (args, req) => {
+    }, updateUser: async (args, req) => {
 
-
-        //console.log("editUser - req.body", req.body)
-        //console.log("editUser - args", args)
+        //console.log("updateUser - req.body", req.body)
+        //console.log("updateUser - args", args)
 
         try {
             const emailUser = await User.findOne({email: req.body.variables.email})
