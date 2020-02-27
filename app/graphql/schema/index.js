@@ -110,6 +110,13 @@ input CreateUserInput {
     tel: String!
 }
 
+input UpdateUserInput {
+    name: String!
+    password: String
+    email: String!
+    tel: String!
+}
+
 
 input CreateTaskInput {
     name: String!
@@ -155,7 +162,7 @@ input ExpectedExpensesInput {
 }
 
 
-input EditTaskInput {
+input UpdateTaskInput {
     id: ID!
     name: String!
     description: String!
@@ -199,7 +206,8 @@ type rootMutation {
     createMonthlyExpenses(monthlyExpenesInput: MonthlyExpensesInput): MonthlyExpenses
     createMonthlyIncomes(monthlyIncomesInput: MonthlyIncomesInput): MonthlyIncomes
     createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): ExpectedExpenses
-    editTask(editTask: EditTaskInput): Task
+    updateTask(UpdateTask: UpdateTaskInput): Task
+    editUser(updateUserInput: UpdateUserInput): AuthData
     editMonthlyExpenses(editMonthlyExpensesInput: EditeMonthlyExpensesInput): MonthlyExpenses
     editMonthlyIncomes(editMonthlyIncomesInput: EditMonthlyIncomesInput): MonthlyIncomes
 }

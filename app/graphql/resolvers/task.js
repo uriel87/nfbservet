@@ -7,21 +7,23 @@ Task = require('../../models/task');
 
 
 module.exports = {
-    createTask: async(args) => {
+    createTask: async(args, req) => {
         try {
 
-            console.log("args in createTask", args)
+            // console.log("args in createTask", args)
+            console.log("req.body in createTask", req.body.variables)
+            userId = req.body.userId
 
             const task = new Task ({
-                user: mongoose.Types.ObjectId('5dd8fad0f2cf5a925104b905'),
-                name: args.taskInput.name,
-                description: args.taskInput.description,
-                category: args.taskInput.category,
-                priority: args.taskInput.priority,
-                startTime: args.taskInput.startTime,
-                endTime: args.taskInput.endTime,
+                user: mongoose.Types.ObjectId(userId),
+                name: req.body.variables.name,
+                description: req.body.variables.description,
+                category: req.body.variables.category,
+                priority: req.body.variables.priority,
+                startTime: req.body.variables.startTime,
+                endTime: req.body.variables.endTime,
                 createTime: new Date().toISOString(),
-                daily: args.taskInput.daily 
+                daily: req.body.variables.daily || false
             })
 
             const newTask = await task.save();
@@ -43,23 +45,23 @@ module.exports = {
             throw err
         }
     },
-    editTask: async(args) => {
-        console.log("args in editTask", args)
+    updateTask: async(args) => {
+        console.log("args in updateTask", args)
         try{
-            const updateTask = {
-                name: args.editTask.name,
-                description: args.editTask.description,
-                category: args.editTask.category,
-                priority: args.editTask.priority,
-                startTime: args.editTask.startTime,
-                endTime: args.editTask.endTime,
-                daily: args.editTask.daily 
+            const taskDetails = {
+                name: args.updateTask.name,
+                description: args.updateTask.description,
+                category: args.updateTask.category,
+                priority: args.updateTask.priority,
+                startTime: args.updateTask.startTime,
+                endTime: args.updateTask.endTime,
+                daily: args.updateTask.daily 
             }
-            const task = await Task.findOneAndUpdate(args.id, updateTask, {new: true})
-            console.log("in function editTask", task)
+            const task = await Task.findOneAndUpdate(args.id, taskDetails, {new: true})
+            console.log("in function updateTask", task)
             return task
         } catch(err) {
-            console.log("Error in function editTask", err)
+            console.log("Error in function updateTask", err)
             throw err
         }
     }
