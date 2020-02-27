@@ -76,16 +76,10 @@ module.exports = {
             userId = req.body.userId
 
             let hashPassword 
-            console.log("editUser - req.body.variables.password", req.body.variables.password)
-
             if(req.body.variables.password) {
                 hashPassword = await bcrypt.hash(req.body.variables.password,12);
             }
-            console.log("editUser - hashPassword", hashPassword)
-
             const user = await User.findById(userId)
-            console.log("editUser - user.password", user.password)
-
 
             userDetailsUpdate = {
                 name: req.body.variables.name.toLowerCase(),
@@ -96,20 +90,6 @@ module.exports = {
 
             const userUpdate = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(userId)}, userDetailsUpdate, {upsert: true})
             
-            // if(userById) {
-            //     return new Error("user exsits already")
-            // }
-
-            //const hashPassword = await bcrypt.hash(req.body.variables.password,12);
-
-            // const user = new User({
-            //     name: req.body.variables.name.toLowerCase(),
-            //     password: hashPassword,
-            //     email: req.body.variables.email.toLowerCase().trim(),
-            //     tel: req.body.variables.tel,
-            // });
-
-            // const userResult = await user.save()
             const token = jwt.sign({userId: userUpdate._id, email: userUpdate.email}, 'nfbsecretkey', {
                 expiresIn: '1h'
             });
