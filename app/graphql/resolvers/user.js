@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require("mongoose")
 bcrypt = require('bcryptjs')
 const DataLoader = require('dataloader')
-const  { taskLoader, monthlyExpensesLoader, monthlyIncomesLoader } = require('../resolvers/dataLoaders');
+const  { tasksLoader, monthlyExpensesLoader, monthlyIncomesLoader } = require('../resolvers/dataLoaders');
 
 
 module.exports = {
@@ -15,11 +15,12 @@ module.exports = {
             // }
             userId = req.body.userId
             const user = await User.findById(userId).populate('expectedExpenses')
+            console.log("getUserDetails - user", user)
             return {
                 ...user._doc,
                 _id: user.id,
                 password: null,
-                taskList: () => taskLoader.loadMany(user.taskList),
+                tasksList: () => tasksLoader.loadMany(user.tasksList),
                 monthlyExpensesList: () => monthlyExpensesLoader.loadMany(user.monthlyExpensesList),
                 monthlyIncomesList: () => monthlyIncomesLoader.loadMany(user.monthlyIncomesList)
             }
@@ -60,16 +61,18 @@ module.exports = {
             console.log(err);
             throw err
         }
-    }, updateUser: async (args, req) => {
+    },
+    editUser: async (args, req) => {
 
-        //console.log("updateUser - req.body", req.body)
-        //console.log("updateUser - args", args)
+        console.log("editUser - req.body", req.body.variables)
 
         try {
             const emailUser = await User.findOne({email: req.body.variables.email})
 
-            if((emailUser.email != req.body.variables.email) && emailUser) {
-                return new Error("user exsits already")
+            if(emailUser) {
+                if((emailUser.email != req.body.variables.email) && emailUser) {
+                    return new Error("user exsits already")
+                }
             }
 
             userId = req.body.userId
@@ -80,23 +83,23 @@ module.exports = {
             }
             const user = await User.findById(userId)
 
-            userDetailsUpdate = {
+            const userDetailsEdit = {
                 name: req.body.variables.name.toLowerCase(),
                 password: hashPassword || user.password,
                 email: req.body.variables.email.toLowerCase().trim(),
                 tel: req.body.variables.tel,
             }
 
-            const userUpdate = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(userId)}, userDetailsUpdate, {upsert: true})
+            const userEdited = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(userId)}, userDetailsEdit, {upsert: true})
             
-            const token = jwt.sign({userId: userUpdate._id, email: userUpdate.email}, 'nfbsecretkey', {
+            const token = jwt.sign({userId: userEdited._id, email: userEdited.email}, 'nfbsecretkey', {
                 expiresIn: '1h'
             });
 
             return {
-                ...userUpdate._doc,
+                ...userEdited._doc,
                 password: null,
-                userId: userUpdate.id,
+                userId: userEdited.id,
                 token: token,
                 tokenExpiration: 1
             }

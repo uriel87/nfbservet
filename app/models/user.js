@@ -15,7 +15,7 @@ const userSchema = new schema( {
 
     tel: String,
     
-    taskList: [{
+    tasksList: [{
         type: schema.Types.ObjectId,
         ref: 'Task'
     }],

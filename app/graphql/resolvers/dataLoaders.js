@@ -7,7 +7,8 @@ const {getTasks, getMonthlyExpeneses, getMonthlyIncomes, getMonthlyExpenesesByDa
 
 module.exports = {
 
-    taskLoader: new DataLoader(taskIds => {
+    tasksLoader: new DataLoader(taskIds => {
+        // console.log("tasksLoader - tasks", taskIds)
         return getTasks(taskIds)
     }),
 

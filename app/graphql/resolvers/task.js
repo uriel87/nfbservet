@@ -10,7 +10,6 @@ module.exports = {
     createTask: async(args, req) => {
         try {
 
-            // console.log("args in createTask", args)
             console.log("req.body in createTask", req.body.variables)
             userId = req.body.userId
 
@@ -28,12 +27,12 @@ module.exports = {
 
             const newTask = await task.save();
             
-            const user = await User.findById("5dd8fad0f2cf5a925104b905")
+            const user = await User.findById(userId)
             if(!user) {
                 throw new Error("createTask function - User didn't found")
             }
 
-            user.taskList.push(newTask)
+            user.tasksList.push(newTask)
             await user.save()
 
             console.log("user in function createTask", user)
@@ -45,23 +44,42 @@ module.exports = {
             throw err
         }
     },
-    updateTask: async(args) => {
-        console.log("args in updateTask", args)
+    editTask: async (args, req) => {
+        console.log("args in editTask", req.body.variables)
         try{
             const taskDetails = {
-                name: args.updateTask.name,
-                description: args.updateTask.description,
-                category: args.updateTask.category,
-                priority: args.updateTask.priority,
-                startTime: args.updateTask.startTime,
-                endTime: args.updateTask.endTime,
-                daily: args.updateTask.daily 
+                name: req.body.variables.name,
+                description: req.body.variables.description,
+                category: req.body.variables.category,
+                startTime: req.body.variables.startTime,
+                endTime: req.body.variables.endTime,
+                daily: req.body.variables.daily 
             }
-            const task = await Task.findOneAndUpdate(args.id, taskDetails, {new: true})
-            console.log("in function updateTask", task)
+
+            const task = await Task.findOneAndUpdate( {_id: mongoose.Types.ObjectId(req.body.variables._id)}, taskDetails, {new: true})
+
+            console.log("in function editTask", task)
             return task
         } catch(err) {
-            console.log("Error in function updateTask", err)
+            console.log("Error in function editTask", err)
+            throw err
+        }
+    },
+    deleteTask: async(args, req) => {
+        console.log("args in deleteTask", req.body.variables)
+        try{
+            const task = await Task.findByIdAndRemove( {_id: mongoose.Types.ObjectId(req.body.variables._id)})
+
+            const user = await User.findById(userId)
+            if(!user) {
+                throw new Error("deleteTask function - User didn't found")
+            }
+            user.tasksList.pull(task.id)
+            await user.save()
+
+            return task._id
+        } catch(err) {
+            console.log("Error in function deleteTask", err)
             throw err
         }
     }

@@ -17,7 +17,7 @@ module.exports = {
         }
 
         const token = jwt.sign({userId: user.id, email: user.email}, 'nfbsecretkey', {
-            expiresIn: '1h'
+            expiresIn: '24h'
         });
         return {
             userId: user.id,

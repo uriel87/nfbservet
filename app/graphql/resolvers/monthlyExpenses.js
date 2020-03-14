@@ -4,7 +4,7 @@ User = require('../../models/user')
 MonthlyExpenses = require('../../models/monthlyExpenses')
 const DataLoader = require('dataloader')
 
-const { taskLoader, monthlyExpensesLoader, monthlyIncomesLoader, monthlyExpensesByDateLoader } = require('../resolvers/dataLoaders');
+const { tasksLoader, monthlyExpensesLoader, monthlyIncomesLoader, monthlyExpensesByDateLoader } = require('../resolvers/dataLoaders');
 
 
 
@@ -15,20 +15,7 @@ module.exports = {
         userId = req.body.userId
 
         try {
-
-            // const monthlyExpenes = new MonthlyExpenses({
-            //     user: mongoose.Types.ObjectId(req.userId),
-            //     name: args.monthlyExpenesInput.name,
-            //     description: args.monthlyExpenesInput.description,
-            //     amount: args.monthlyExpenesInput.amount,
-            //     category: args.monthlyExpenesInput.category,
-            //     payment: args.monthlyExpenesInput.payment || 1,
-            //     paymentLeft: args.monthlyExpenesInput.payment,
-            //     purchaseTime: new Date().toISOString(),
-            //     year: new Date().getFullYear(),
-            //     month: new Date().getMonth() + 1
-            // })
-
+            
             const monthlyExpenes = new MonthlyExpenses({
                 user: mongoose.Types.ObjectId(userId),
                 name: req.body.variables.name,

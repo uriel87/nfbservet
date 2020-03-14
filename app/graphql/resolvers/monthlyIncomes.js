@@ -5,16 +5,16 @@ User = require('../../models/user')
 
 module.exports = {
 
-    createMonthlyIncomes: async (args) => {
-        console.log("args in createIncome", args)
-
+    createMonthlyIncomes: async (args, req) => {
+        console.log("req in createIncome", req.body)
+        userId = req.body.userId
         try{
             const monthlyIncomes = new MonthlyIncomes ({
-                user: mongoose.Types.ObjectId('5dd8fad0f2cf5a925104b905'),
-                name: args.monthlyIncomesInput.name,
-                description: args.monthlyIncomesInput.description,
-                amount: args.monthlyIncomesInput.amount,
-                monthly: args.monthlyIncomesInput.monthly,
+                user: mongoose.Types.ObjectId(userId),
+                name: req.body.variables.name,
+                description: req.body.variables.description,
+                amount: req.body.variables.amount,
+                monthly: req.body.variables.monthly,
                 incomeTime: new Date().toISOString(),
                 year: new Date().getFullYear(),
                 month: new Date().getMonth() + 1
@@ -22,7 +22,7 @@ module.exports = {
 
             const NewMonthlyIncomes = await monthlyIncomes.save()
 
-            const user = await User.findById('5dd8fad0f2cf5a925104b905')
+            const user = await User.findById(userId)
             if(!user) {
                 throw new Error("createMonthlyIncomes function - User didn't found")
             }
@@ -59,20 +59,40 @@ module.exports = {
             throw err
         }
     },
-    editMonthlyIncomes: async(args) => {
-        console.log("args in editMonthlyIncomes", args)
+    editMonthlyIncomes: async (args, req) => {
+        console.log("args in editMonthlyIncomes", req.body.variables)
         try{
-            const updateMonthlyIncomes = {
-                name: args.editMonthlyIncomesInput.name,
-                description: args.editMonthlyIncomesInput.description,
-                amount: args.editMonthlyIncomesInput.amount,
-                monthly: args.editMonthlyIncomesInput.monthly,
+            const editMonthlyIncomes = {
+                name: req.body.variables.name,
+                description: req.body.variables.description,
+                amount: req.body.variables.amount,
+                monthly: req.body.variables.monthly,
             }
-            const monthlyIncomes = await MonthlyIncomes.findOneAndUpdate(args.id, updateMonthlyIncomes, {new: true})
+
+            const monthlyIncomes = await MonthlyIncomes.findOneAndUpdate( {_id: mongoose.Types.ObjectId(req.body.variables._id)}, editMonthlyIncomes, {new: true})
+
             console.log("in function editMonthlyIncomes", monthlyIncomes)
             return monthlyIncomes
         } catch(err) {
             console.log("Error in function editMonthlyIncomes", err)
+            throw err
+        }
+    },
+    deleteMonthlyIncomes: async (args, req) => {
+        console.log("args in deleteMonthlyIncomes", req.body)
+        try{
+            const income = await MonthlyIncomes.findByIdAndRemove( {_id: mongoose.Types.ObjectId(req.body.variables._id)})
+
+            const user = await User.findById(userId)
+            if(!user) {
+                throw new Error("deleteMonthlyIncomes function - User didn't found")
+            }
+            user.monthlyIncomesList.pull(income.id)
+            await user.save()
+
+            return income._id
+        } catch(err) {
+            console.log("Error in function deleteMonthlyIncomes", err)
             throw err
         }
     }

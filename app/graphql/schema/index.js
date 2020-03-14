@@ -9,7 +9,7 @@ type User {
     password: String
     email: String!
     tel: String!
-    taskList: [Task]
+    tasksList: [Task]
     monthlyExpensesList:[MonthlyExpenses]
     monthlyIncomesList: [MonthlyIncomes]
     expectedExpenses: ExpectedExpenses
@@ -110,11 +110,11 @@ input CreateUserInput {
     tel: String!
 }
 
-input UpdateUserInput {
-    name: String!
+input EditUserInput {
+    name: String
     password: String
-    email: String!
-    tel: String!
+    email: String
+    tel: String
 }
 
 
@@ -162,7 +162,7 @@ input ExpectedExpensesInput {
 }
 
 
-input UpdateTaskInput {
+input EditTaskInput {
     id: ID!
     name: String!
     description: String!
@@ -171,6 +171,14 @@ input UpdateTaskInput {
     startTime: String!
     endTime: String!
     daily: Boolean!
+}
+
+input DeleteTaskInput {
+    id: ID!
+}
+
+input DeleteMonthlyIncomesInput {
+    id: ID!
 }
 
 input EditeMonthlyExpensesInput {
@@ -206,10 +214,12 @@ type rootMutation {
     createMonthlyExpenses(monthlyExpenesInput: MonthlyExpensesInput): MonthlyExpenses
     createMonthlyIncomes(monthlyIncomesInput: MonthlyIncomesInput): MonthlyIncomes
     createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): ExpectedExpenses
-    updateTask(UpdateTask: UpdateTaskInput): Task
-    updateUser(updateUserInput: UpdateUserInput): AuthData
+    editTask(editTaskInput: EditTaskInput): Task
+    editUser(editUserInput: EditUserInput): AuthData
     editMonthlyExpenses(editMonthlyExpensesInput: EditeMonthlyExpensesInput): MonthlyExpenses
     editMonthlyIncomes(editMonthlyIncomesInput: EditMonthlyIncomesInput): MonthlyIncomes
+    deleteTask(deleteTaskInput: DeleteTaskInput): Task
+    deleteMonthlyIncomes(deleteMonthlyIncomesInput: DeleteMonthlyIncomesInput): MonthlyIncomes
 }
 
 schema {

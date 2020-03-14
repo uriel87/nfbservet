@@ -13,7 +13,8 @@ config = {
 var options = {
 	useNewUrlParser: true,
 	useCreateIndex: true,
-	auto_reconnect:true
+	auto_reconnect:true,
+	useFindAndModify: false
 };
 
 
