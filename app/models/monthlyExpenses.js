@@ -16,17 +16,19 @@ const monthlyExpensesSchema = new schema({
 
     amount: Number,
 
+    monthly: { type: Boolean, default: false},
+
     category: String,
 
-    payment: Number,
+    payments: Number,
 
-    paymentLeft: Number,
-
-    purchaseTime: String,
+    time: String,
 
     year: Number,
 
-    month: Number
+    month: Number,
+
+    isExpense: { type: Boolean, default: true},
 
 }, {collation: 'monthlyExpenses'})
 

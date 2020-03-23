@@ -18,11 +18,13 @@ const monthlyIncomesSchema = new schema({
 
     monthly: { type: Boolean, default: false},
 
-    incomeTime: String,
+    time: String,
 
     year: Number,
 
-    month: Number
+    month: Number,
+
+    isExpense: { type: Boolean, default: false},
 
 }, { collection: 'monthlyIncomes'})
 

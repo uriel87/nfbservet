@@ -24,7 +24,6 @@ enum TaskCategory {
 }
 
 
-
 enum Priority {
     LOW
     NORMAL
@@ -51,25 +50,27 @@ type MonthlyExpenses {
     name: String
     description: String
     amount: Int
+    monthly: Boolean
     category: String
-    payment: Int
-    paymentLeft: Int
-    purchaseTime: String
+    payments: Int
+    time: String
     year: Int
     month: Int
+    isExpense: Boolean
 }
 
 
 type MonthlyIncomes {
     _id: ID!
     user: ID
-    name: String,
-    description: String,
-    amount: Int,
-    monthly: Boolean,
-    incomeTime: String,
-    year: Int,
+    name: String
+    description: String
+    amount: Int
+    monthly: Boolean
+    time: String
+    year: Int
     month: Int
+    isExpense: Boolean
 }
 
 type monthlyExpensesList {
@@ -79,15 +80,15 @@ type monthlyExpensesList {
 
 type ExpectedExpenses {
     _id: ID!
-    groceries: Int,
-    car: Int,
-    bills: Int,
-    fun: Int,
-    education: Int,
-    devices: Int,
-    clothings: Int,
-    other: Int,
-    year: Int,
+    groceries: Int
+    car: Int
+    bills: Int
+    fun: Int
+    education: Int
+    devices: Int
+    clothings: Int
+    other: Int
+    year: Int
     month: Int
 }
 
@@ -132,9 +133,9 @@ input MonthlyExpensesInput {
     name: String!
     description: String!
     amount: Int!
+    monthly: Boolean!
     category: String!
-    payment: Int!
-    paymentLeft: Int
+    payments: Int!
 }
 
 input DateInput {
@@ -143,22 +144,22 @@ input DateInput {
 }
 
 input MonthlyIncomesInput {
-    name: String,
-    description: String,
-    amount: Int,
-    monthly: Boolean,
+    name: String
+    description: String
+    amount: Int
+    monthly: Boolean
 }
 
 
 input ExpectedExpensesInput {
-    groceries: Int,
-    car: Int,
-    bills: Int,
-    fun: Int,
-    education: Int,
-    devices: Int,
-    clothings: Int,
-    other: Int,
+    groceries: Int
+    car: Int
+    bills: Int
+    fun: Int
+    education: Int
+    devices: Int
+    clothings: Int
+    other: Int
 }
 
 
@@ -181,22 +182,26 @@ input DeleteMonthlyIncomesInput {
     id: ID!
 }
 
-input EditeMonthlyExpensesInput {
+input DeleteMonthlyExpenseInput {
+    id: ID!
+}
+
+input EditMonthlyExpenseInput {
     id: ID!
     name: String!
     description: String!
     amount: Int!
+    monthly: Boolean!
     category: String!
-    payment: Int!
-    paymentLeft: Int
+    payments: Int!
 }
 
 input EditMonthlyIncomesInput {
     id: ID!
     name: String,
-    description: String,
-    amount: Int,
-    monthly: Boolean,
+    description: String
+    amount: Int
+    monthly: Boolean
 }
 
 
@@ -216,10 +221,11 @@ type rootMutation {
     createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): ExpectedExpenses
     editTask(editTaskInput: EditTaskInput): Task
     editUser(editUserInput: EditUserInput): AuthData
-    editMonthlyExpenses(editMonthlyExpensesInput: EditeMonthlyExpensesInput): MonthlyExpenses
+    editMonthlyExpense(editMonthlyExpenseInput: EditMonthlyExpenseInput): MonthlyExpenses
     editMonthlyIncomes(editMonthlyIncomesInput: EditMonthlyIncomesInput): MonthlyIncomes
     deleteTask(deleteTaskInput: DeleteTaskInput): Task
     deleteMonthlyIncomes(deleteMonthlyIncomesInput: DeleteMonthlyIncomesInput): MonthlyIncomes
+    deleteMonthlyExpense(deleteMonthlyExpenseInput: DeleteMonthlyExpenseInput): MonthlyExpenses
 }
 
 schema {

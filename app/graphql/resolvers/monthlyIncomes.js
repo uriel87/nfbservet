@@ -15,7 +15,7 @@ module.exports = {
                 description: req.body.variables.description,
                 amount: req.body.variables.amount,
                 monthly: req.body.variables.monthly,
-                incomeTime: new Date().toISOString(),
+                time: new Date().toISOString(),
                 year: new Date().getFullYear(),
                 month: new Date().getMonth() + 1
             })
@@ -67,6 +67,7 @@ module.exports = {
                 description: req.body.variables.description,
                 amount: req.body.variables.amount,
                 monthly: req.body.variables.monthly,
+                isExpense: false
             }
 
             const monthlyIncomes = await MonthlyIncomes.findOneAndUpdate( {_id: mongoose.Types.ObjectId(req.body.variables._id)}, editMonthlyIncomes, {new: true})
@@ -82,12 +83,13 @@ module.exports = {
         console.log("args in deleteMonthlyIncomes", req.body)
         try{
             const income = await MonthlyIncomes.findByIdAndRemove( {_id: mongoose.Types.ObjectId(req.body.variables._id)})
+            console.log("deleteMonthlyIncomes income", income)
 
             const user = await User.findById(userId)
             if(!user) {
                 throw new Error("deleteMonthlyIncomes function - User didn't found")
             }
-            user.monthlyIncomesList.pull(income.id)
+            user.monthlyIncomesList.pull(income._id)
             await user.save()
 
             return income._id
@@ -97,3 +99,4 @@ module.exports = {
         }
     }
 }
+
