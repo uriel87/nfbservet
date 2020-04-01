@@ -1,47 +1,47 @@
 
 const mongoose = require("mongoose")
-
 User = require('../../models/user')
-ExpectedExpenses = require('../../models/expectedExpense')
+MonthlyExpectedExpenses = require('../../models/monthlyExpectedExpenses')
 
 
 module.exports = {
 
-    createExpectedExpenses: async (args) => {
-
-        console.log("args in createExpectedExpenses", args)
-
+    createMonthlyExpectedExpenses: async (args, req) => {
+        console.log("req.body in createExpectedExpenses", req.body)
+        userId = req.body.userId
+        
         try {
-            const expectedExpenses = new ExpectedExpenses({
-                userId: mongoose.Types.ObjectId('5dd8fad0f2cf5a925104b905'),
-                groceries: args.expectedExpensesInput.groceries,
-                car: args.expectedExpensesInput.car,
-                bills: args.expectedExpensesInput.bills,
-                fun: args.expectedExpensesInput.fun,
-                education: args.expectedExpensesInput.education,
-                devices: args.expectedExpensesInput.devices,
-                clothings: args.expectedExpensesInput.clothings,
-                other: args.expectedExpensesInput.other,
+            const expectedExpenses = new MonthlyExpectedExpenses({
+                userId: mongoose.Types.ObjectId(userId),
+                groceries: req.body.variables.groceries || 0,
+                car: req.body.variables.car || 0,
+                bills: req.body.variables.bills || 0,
+                fun: req.body.variables.fun || 0,
+                education: req.body.variables.education || 0,
+                devices: req.body.variables.devices || 0,
+                clothings: req.body.variables.clothings || 0,
+                other: req.body.variables.other || 0,
                 year: new Date().getFullYear(),
-                month: new Date().getMonth() + 1
+                month: new Date().getMonth() + 1,
+                totalExpectedExpenses: req.body.variables.groceries +
+                req.body.variables.car +
+                req.body.variables.bills +
+                req.body.variables.fun +
+                req.body.variables.education +
+                req.body.variables.devices +
+                req.body.variables.clothings +
+                req.body.variables.other
             })
 
             const newExpectedExpenses = await expectedExpenses.save()
 
-            const user = await User.update({
-                "_id": '5dd8fad0f2cf5a925104b905'
-            },{
-                $set:{'expectedExpenses':newExpectedExpenses
-            }})
-
+            const user = await User.findById(userId)
             if(!user) {
-                throw new Error("createExpectedExpenses function - User didn't found")
+                throw new Error("createTask function - User didn't found")
             }
 
-            // user.expectedExpenses.push(newExpectedExpenses)
-            // let doc = await Character.findOneAndUpdate(filter, update);
-            //await user.save()
-            console.log("userResult", user)
+            user.monthlyExpectedExpensesList.push(newExpectedExpenses)
+            await user.save()
 
             return newExpectedExpenses
 
@@ -95,3 +95,10 @@ module.exports = {
     // }
 
 }
+
+
+// const user = await User.update({
+//     "_id": '5dd8fad0f2cf5a925104b905'
+// },{
+//     $set:{'expectedExpenses':newExpectedExpenses
+// }})

@@ -16,6 +16,8 @@ const monthlyExpensesSchema = new schema({
 
     amount: Number,
 
+    amountPerMonth: Number,
+
     monthly: { type: Boolean, default: false},
 
     category: String,

@@ -1,6 +1,6 @@
 
 const DataLoader = require('dataloader');
-const {getTasks, getMonthlyExpeneses, getMonthlyIncomes, getMonthlyExpenesesByDate } = require('../resolvers/mrege')
+const {getTasks, getMonthlyExpeneses, getMonthlyIncomes, getMonthlyExpectedExpenses } = require('../resolvers/mrege')
 
 
 // The list of data loaders
@@ -18,6 +18,10 @@ module.exports = {
 
     monthlyIncomesLoader: new DataLoader( monthlyIncomesIds => {
         return getMonthlyIncomes(monthlyIncomesIds)
+    }),
+
+    monthlyExpectedExpensesLoader: new DataLoader( monthlyExpectedExpensesIds => {
+        return getMonthlyExpectedExpenses(monthlyExpectedExpensesIds)
     })
     
 }

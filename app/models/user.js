@@ -30,12 +30,13 @@ const userSchema = new schema( {
         ref: 'MonthlyIncomes'
     }],
 
-    expectedExpenses: {
+    monthlyExpectedExpensesList: [{
         type: schema.Types.ObjectId,
-        ref: 'ExpectedExpenses'
-    }
+        ref: 'MonthlyExpectedExpenses'
+    }]
 
 }, {collection: 'users'});
 
 // Define schema name
 module.exports = mongoose.model('User',userSchema);
+

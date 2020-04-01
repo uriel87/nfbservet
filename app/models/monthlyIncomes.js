@@ -18,6 +18,8 @@ const monthlyIncomesSchema = new schema({
 
     monthly: { type: Boolean, default: false},
 
+    category: String,
+
     time: String,
 
     year: Number,

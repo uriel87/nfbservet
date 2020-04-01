@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require("mongoose")
 bcrypt = require('bcryptjs')
 const DataLoader = require('dataloader')
-const  { tasksLoader, monthlyExpensesLoader, monthlyIncomesLoader } = require('../resolvers/dataLoaders');
+const  { tasksLoader, monthlyExpensesLoader, monthlyIncomesLoader, monthlyExpectedExpensesLoader } = require('../resolvers/dataLoaders');
 
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
             //     return new Error("Unauthenticated")
             // }
             userId = req.body.userId
-            const user = await User.findById(userId).populate('expectedExpenses')
+            const user = await User.findById(userId)//.populate('monthlyExpectedExpensesList')
             console.log("getUserDetails - user", user)
             return {
                 ...user._doc,
@@ -22,7 +22,8 @@ module.exports = {
                 password: null,
                 tasksList: () => tasksLoader.loadMany(user.tasksList),
                 monthlyExpensesList: () => monthlyExpensesLoader.loadMany(user.monthlyExpensesList),
-                monthlyIncomesList: () => monthlyIncomesLoader.loadMany(user.monthlyIncomesList)
+                monthlyIncomesList: () => monthlyIncomesLoader.loadMany(user.monthlyIncomesList),
+                monthlyExpectedExpensesList: () => monthlyExpectedExpensesLoader.loadMany(user.monthlyExpectedExpensesList)
             }
         } catch (err) {
             console.log(err);

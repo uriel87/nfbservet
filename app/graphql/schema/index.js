@@ -12,7 +12,7 @@ type User {
     tasksList: [Task]
     monthlyExpensesList:[MonthlyExpenses]
     monthlyIncomesList: [MonthlyIncomes]
-    expectedExpenses: ExpectedExpenses
+    monthlyExpectedExpensesList: [MonthlyExpectedExpenses]
 }
 
 
@@ -49,7 +49,8 @@ type MonthlyExpenses {
     user: ID
     name: String
     description: String
-    amount: Int
+    amount: Float
+    amountPerMonth: Float
     monthly: Boolean
     category: String
     payments: Int
@@ -65,8 +66,9 @@ type MonthlyIncomes {
     user: ID
     name: String
     description: String
-    amount: Int
+    amount: Float
     monthly: Boolean
+    category: String
     time: String
     year: Int
     month: Int
@@ -78,7 +80,7 @@ type monthlyExpensesList {
 }
 
 
-type ExpectedExpenses {
+type MonthlyExpectedExpenses {
     _id: ID!
     groceries: Int
     car: Int
@@ -90,6 +92,7 @@ type ExpectedExpenses {
     other: Int
     year: Int
     month: Int
+    totalExpectedExpenses: Int
 }
 
 
@@ -132,7 +135,7 @@ input CreateTaskInput {
 input MonthlyExpensesInput {
     name: String!
     description: String!
-    amount: Int!
+    amount: Float!
     monthly: Boolean!
     category: String!
     payments: Int!
@@ -146,12 +149,13 @@ input DateInput {
 input MonthlyIncomesInput {
     name: String
     description: String
-    amount: Int
+    amount: Float
     monthly: Boolean
+    category: String
 }
 
 
-input ExpectedExpensesInput {
+input MonthlyExpectedExpensesInput {
     groceries: Int
     car: Int
     bills: Int
@@ -190,7 +194,7 @@ input EditMonthlyExpenseInput {
     id: ID!
     name: String!
     description: String!
-    amount: Int!
+    amount: Float!
     monthly: Boolean!
     category: String!
     payments: Int!
@@ -200,8 +204,9 @@ input EditMonthlyIncomesInput {
     id: ID!
     name: String,
     description: String
-    amount: Int
+    amount: Float
     monthly: Boolean
+    category: String
 }
 
 
@@ -209,7 +214,7 @@ type rootQuery {
     getUserDetails: User!
     login(loginInput: LoginInput): AuthData!
     getMonthlyExpenses(monthlyExpensesDateInput: DateInput): [MonthlyExpenses]
-    getExpectedExpenses(expectedExpensesDateInput: DateInput): [ExpectedExpenses]
+    getMonthlyExpectedExpenses(expectedExpensesDateInput: DateInput): [MonthlyExpectedExpenses]
     getMonthlyIncomes(monthlyIncomesDateInput: DateInput): [MonthlyIncomes]
 }
 
@@ -218,7 +223,7 @@ type rootMutation {
     createTask(taskInput: CreateTaskInput): Task
     createMonthlyExpenses(monthlyExpenesInput: MonthlyExpensesInput): MonthlyExpenses
     createMonthlyIncomes(monthlyIncomesInput: MonthlyIncomesInput): MonthlyIncomes
-    createExpectedExpenses(expectedExpensesInput: ExpectedExpensesInput): ExpectedExpenses
+    createMonthlyExpectedExpenses(monthlyExpectedExpensesInput: MonthlyExpectedExpensesInput): MonthlyExpectedExpenses
     editTask(editTaskInput: EditTaskInput): Task
     editUser(editUserInput: EditUserInput): AuthData
     editMonthlyExpense(editMonthlyExpenseInput: EditMonthlyExpenseInput): MonthlyExpenses

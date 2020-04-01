@@ -46,11 +46,15 @@ module.exports = {
     },
     editTask: async (args, req) => {
         console.log("args in editTask", req.body.variables)
+        console.log("req.body.variables._id", req.body.variables._id)
+
+
         try{
             const taskDetails = {
                 name: req.body.variables.name,
                 description: req.body.variables.description,
                 category: req.body.variables.category,
+                priority: req.body.variables.priority,
                 startTime: req.body.variables.startTime,
                 endTime: req.body.variables.endTime,
                 daily: req.body.variables.daily 

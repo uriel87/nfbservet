@@ -2,7 +2,7 @@ const userResolver = require('../resolvers/user'),
       taskResolver = require('../resolvers/task'),
       monthlyExpensesResolver = require('../resolvers/monthlyExpenses')
       monthlyIncomesResolver = require('../resolvers/monthlyIncomes'),
-      expectedExpensesResolver = require('../resolvers/expectedExpenses'),
+      monthlyExpectedExpensesResolver = require('../resolvers/monthlyExpectedExpenses'),
       authResolver = require('../resolvers/auth')
 
 
@@ -11,7 +11,7 @@ const rootResolver = {
     ...taskResolver,
     ...monthlyExpensesResolver,
     ...monthlyIncomesResolver,
-    ...expectedExpensesResolver,
+    ...monthlyExpectedExpensesResolver,
     ...authResolver
 };
 

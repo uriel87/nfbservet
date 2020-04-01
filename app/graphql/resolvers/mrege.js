@@ -5,7 +5,7 @@ User = require('../../models/user')
 Task = require('../../models/task')
 MonthlyExpeneses = require('../../models/monthlyExpenses')
 MonthliIncomes = require('../../models/monthlyIncomes')
-ExpectedExpenses = require('../../models/expectedExpense')
+MonthlyExpectedExpenses = require('../../models/monthlyExpectedExpenses')
 
 
 module.exports = {
@@ -52,14 +52,16 @@ module.exports = {
         }
     },
 
-    getExpextedExpenses: async expectedExpensesId => {
-        console.log("args in getExpextedExpenses merge", expectedExpensesId)
-
+    getMonthlyExpectedExpenses: async monthlyExpectedExpensesId => {
+        console.log("args in getMonthlyExpectedExpenses merge", monthlyExpectedExpensesId)
+                                                                
         try {
-            const expectedExpenses = await ExpectedExpenses.findById(expectedExpensesId)
-            return expectedExpenses
+            const monthlyExpectedExpenses = await MonthlyExpectedExpenses.find({_id: {$in: monthlyExpectedExpensesId}})
+            return monthlyExpectedExpenses.map(monthlyExpectedExpense => {
+                return monthlyExpectedExpense;
+            })
         } catch(err) {
-            console.log("Error in function getExpextedExpenses", err)
+            console.log("Error in function getMonthlyExpectedExpenses", err)
             throw err
         }
     }

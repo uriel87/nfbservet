@@ -3,8 +3,9 @@ var mongoose = require("mongoose")
 User = require('../../models/user')
 MonthlyExpenses = require('../../models/monthlyExpenses')
 const DataLoader = require('dataloader')
+const _ = require('underscore');
 
-const { tasksLoader, monthlyExpensesLoader, monthlyIncomesLoader, monthlyExpensesByDateLoader } = require('../resolvers/dataLoaders');
+// const { tasksLoader, monthlyExpensesLoader, monthlyIncomesLoader, monthlyExpensesByDateLoader } = require('../resolvers/dataLoaders');
 
 
 
@@ -24,28 +25,25 @@ module.exports = {
                 monthly: req.body.variables.monthly,
                 category: req.body.variables.category,
                 payments: req.body.variables.payments || 1,
+                amountPerMonth: req.body.variables.amount/req.body.variables.payments,
                 // paymentLeft: req.body.variables.payments,
                 time: new Date().toISOString(),
                 year: new Date().getFullYear(),
                 month: new Date().getMonth() + 1,
             })
 
-            const NewMonthlyExpenes = await monthlyExpenes.save()
+            const newMonthlyExpenes = await monthlyExpenes.save()
 
             const user = await User.findById(userId)
-            //const user = await User.findById("5dd8fad0f2cf5a925104b905")
-
             
             if (!user) {
                 throw new Error("createMonthlyExpenes function - User didn't found")
             }
 
-            user.monthlyExpensesList.push(NewMonthlyExpenes)
+            user.monthlyExpensesList.push(newMonthlyExpenes)
             await user.save()
 
-            console.log("userResult", user)
-
-            return NewMonthlyExpenes
+            return newMonthlyExpenes
 
         } catch (err) {
             console.log("Error in function createMonthlyExpenes", err)
@@ -77,12 +75,12 @@ module.exports = {
                 name: req.body.variables.name,
                 description: req.body.variables.description,
                 amount: req.body.variables.amount,
+                amountPerMonth: req.body.variables.amount/req.body.variables.payments,
                 monthly: req.body.variables.monthly,
                 category: req.body.variables.category,
                 payments: req.body.variables.payments,
                 isExpense: true
             }
-            // const monthlyExpenes = await MonthlyExpenses.findOneAndUpdate(args.id, updateMonthlyExpene, { new: true })
             const monthlyExpenes = await MonthlyExpenses.findOneAndUpdate( {_id: mongoose.Types.ObjectId(req.body.variables._id)}, updateMonthlyExpene, {new: true})
 
             console.log("in function editMonthlyExpense", monthlyExpenes)
