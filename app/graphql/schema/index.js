@@ -102,6 +102,10 @@ type AuthData {
     tokenExpiration: Int!
 }
 
+type Message {
+    status: Int
+}
+
 input LoginInput {
     email: String!
     password: String!
@@ -209,6 +213,10 @@ input EditMonthlyIncomesInput {
     category: String
 }
 
+input ForgotPasswordInput {
+    email: String
+}
+
 
 type rootQuery {
     getUserDetails: User!
@@ -231,6 +239,7 @@ type rootMutation {
     deleteTask(deleteTaskInput: DeleteTaskInput): Task
     deleteMonthlyIncomes(deleteMonthlyIncomesInput: DeleteMonthlyIncomesInput): MonthlyIncomes
     deleteMonthlyExpense(deleteMonthlyExpenseInput: DeleteMonthlyExpenseInput): MonthlyExpenses
+    forgotPassword(forgotPasswordInput: ForgotPasswordInput) : Message
 }
 
 schema {

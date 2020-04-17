@@ -64,7 +64,7 @@ module.exports = {
         }
     },
     editUser: async (args, req) => {
-
+        console.log("editUser - args", args)
         console.log("editUser - req.body", req.body.variables)
 
         try {

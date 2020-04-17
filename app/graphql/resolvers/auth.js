@@ -1,11 +1,14 @@
 
 User = require('../../models/user')
+const mongoose = require("mongoose")
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer');
 bcrypt = require('bcryptjs')
 
 
 module.exports = {
     login: async (args, req) => {
+        
         const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
         if(!user) {
             throw new Error("invalid credentials")
@@ -24,5 +27,59 @@ module.exports = {
             token: token,
             tokenExpiration: 1
         }
-    }
+    },
+    forgotPassword: async (args, req) => {
+        try {
+            
+            const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
+            if(!user) {
+                return {
+                    status: 0
+                }
+            };
+
+            const temporaryPassword = Math.random().toString(36).slice(-8);
+
+            const hashPassword = await bcrypt.hash(temporaryPassword,12);
+
+            const userDetailsEdit = {
+                name: user.name.toLowerCase(),
+                password: hashPassword,
+                email: user.email.toLowerCase().trim(),
+                tel: user.tel,
+            }
+
+            const userEdited = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(user._id)}, userDetailsEdit, {upsert: true})
+
+            let account = await nodemailer.createTestAccount();
+
+            let transporter = await nodemailer.createTransport({
+                sendmail: true,
+                host: account.smtp.host,
+                port: account.smtp.port,
+                secure: account.smtp.secure,
+                auth: {
+                    user: account.user,
+                    pass: account.pass
+                }
+            });
+
+            const mailOptions = {
+                from: 'nfbapp1@gmail.com',
+                to: userEdited.email,
+                subject: 'NFB - Change password',
+                html: `<p>Hi ${userEdited.name}, </p>
+                       <p>Your temporary password is ${temporaryPassword}</p>`
+            };
+            
+            await transporter.sendMail(mailOptions)
+
+            return {
+                status: 1
+            }
+
+        } catch (err) {
+                console.log(err);
+            }
+        }
 }
