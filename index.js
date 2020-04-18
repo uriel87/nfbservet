@@ -5,6 +5,9 @@ var express = require('./config/express');
 var app = express();
 
 // Use the Express application instance to listen to the port
+console.log("process.env.Email", process.env.EMAIL)
+console.log("process.env", process.env.EMAIL)
+
 app.set('port', process.env.PORT || 8000);
 
 var server = app.listen(app.get('port'), function() {
