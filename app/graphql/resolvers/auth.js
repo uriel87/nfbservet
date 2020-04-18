@@ -30,16 +30,12 @@ module.exports = {
     },
     forgotPassword: async (args, req) => {
         try {
-            console.log("process.env.Email", process.env.EMAIL)
-            console.log("process.env", process.env.EMAIL)
             const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
             if(!user) {
                 return {
                     status: 0
                 }
             };
-
-
 
             const temporaryPassword = Math.random().toString(36).slice(-8);
 
@@ -54,8 +50,6 @@ module.exports = {
 
             const userEdited = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(user._id)}, userDetailsEdit, {upsert: true})
 
-            // let account = await nodemailer.createTestAccount();
-
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -63,7 +57,8 @@ module.exports = {
                     pass: process.env.PASS
                 }
             });
-
+            
+            // let account = await nodemailer.createTestAccount();
             // let transporter = await nodemailer.createTransport({
             //     sendmail: true,
             //     host: account.smtp.host,
@@ -75,15 +70,15 @@ module.exports = {
             //     }
             // });
 
-            const mailOptions = {
+            const forgotPasswordEmail = {
                 from: 'nfbapp1@gmail.com',
-                to: 'urielc999@walla.com',//userEdited.email,
+                to: userEdited.email,
                 subject: 'NFB - Change password',
                 html: `<p>Hi ${userEdited.name}, </p>
                        <p>Your temporary password is ${temporaryPassword}</p>`
             };
             
-            await transporter.sendMail(mailOptions)
+            await transporter.sendMail(forgotPasswordEmail)
 
             return {
                 status: 1
