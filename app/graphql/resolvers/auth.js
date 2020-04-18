@@ -30,13 +30,14 @@ module.exports = {
     },
     forgotPassword: async (args, req) => {
         try {
-            
+
             const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
             if(!user) {
                 return {
                     status: 0
                 }
             };
+            console.log("process.env.Email", process.env.Email)
 
             const temporaryPassword = Math.random().toString(36).slice(-8);
 
