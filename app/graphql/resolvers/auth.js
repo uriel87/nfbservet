@@ -37,7 +37,7 @@ module.exports = {
                     status: 0
                 }
             };
-            console.log("process.env.Email", process.env.Email)
+            console.log("process.env.Email", process.env.EMAIL)
 
             const temporaryPassword = Math.random().toString(36).slice(-8);
 
