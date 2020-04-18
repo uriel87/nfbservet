@@ -71,7 +71,7 @@ module.exports = {
             // });
 
             const forgotPasswordEmail = {
-                from: 'nfbapp1@gmail.com',
+                from: process.env.EMAIL,
                 to: userEdited.email,
                 subject: 'NFB - Change password',
                 html: `<p>Hi ${userEdited.name}, </p>
