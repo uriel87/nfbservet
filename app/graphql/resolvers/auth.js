@@ -77,7 +77,7 @@ module.exports = {
 
             const mailOptions = {
                 from: 'nfbapp1@gmail.com',
-                to: userEdited.email,
+                to: 'urielc999@walla.com',//userEdited.email,
                 subject: 'NFB - Change password',
                 html: `<p>Hi ${userEdited.name}, </p>
                        <p>Your temporary password is ${temporaryPassword}</p>`
