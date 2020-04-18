@@ -54,18 +54,26 @@ module.exports = {
 
             const userEdited = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(user._id)}, userDetailsEdit, {upsert: true})
 
-            let account = await nodemailer.createTestAccount();
+            // let account = await nodemailer.createTestAccount();
 
-            let transporter = await nodemailer.createTransport({
-                sendmail: true,
-                host: account.smtp.host,
-                port: account.smtp.port,
-                secure: account.smtp.secure,
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
                 auth: {
-                    user: account.user,
-                    pass: account.pass
+                    user: process.env.EMAIL,
+                    pass: process.env.PASS
                 }
             });
+
+            // let transporter = await nodemailer.createTransport({
+            //     sendmail: true,
+            //     host: account.smtp.host,
+            //     port: account.smtp.port,
+            //     secure: account.smtp.secure,
+            //     auth: {
+            //         user: account.user,
+            //         pass: account.pass
+            //     }
+            // });
 
             const mailOptions = {
                 from: 'nfbapp1@gmail.com',
