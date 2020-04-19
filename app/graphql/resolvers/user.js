@@ -75,6 +75,10 @@ module.exports = {
         try {
             const emailReq = req.body.variables.email
             const emailUser = await User.findOne({email: emailReq})
+            console.log("emailReq", emailReq)
+            console.log("emailUser", emailUser)
+
+
             if(emailUser && (emailUser !== emailReq)) {
                 console.log(" iinn emailUser", emailUser)
 
