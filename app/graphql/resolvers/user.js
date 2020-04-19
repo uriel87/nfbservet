@@ -73,8 +73,9 @@ module.exports = {
     },
     editUser: async (args, req) => {
         try {
-            const emailUser = await User.findOne({email: req.body.variables.email})
-            if(emailUser) {
+            const emailReq = req.body.variables.email
+            const emailUser = await User.findOne({email: emailReq})
+            if(emailUser && (emailUser !== emailReq)) {
                 console.log(" iinn emailUser", emailUser)
 
                 return {
