@@ -79,7 +79,7 @@ module.exports = {
             console.log("emailUser", emailUser)
 
 
-            if(emailUser && (emailUser !== emailReq)) {
+            if(emailUser && (emailUser.email !== emailReq)) {
                 console.log(" iinn emailUser", emailUser)
 
                 return {
