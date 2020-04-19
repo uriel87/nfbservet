@@ -8,7 +8,7 @@ const express = require('express'),
 
 module.exports = function() {
 
-    var app = express();
+    var app = express()
     
     app.use(function(req, res, next) {
         console.log("req.method", req.method)

@@ -11,21 +11,35 @@ module.exports = {
         
         const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
         if(!user) {
-            throw new Error("invalid credentials")
+            return {
+                userId: "",
+                token: "",
+                tokenExpiration: 0,
+                status: 2
+            }
+            // throw new Error("invalid credentials")
         };
         const isEqual = await bcrypt.compare(req.body.variables.password, user.password)
 
         if(!isEqual || !user) {
-            throw new Error("invalid credentials")
+            return {
+                userId: "",
+                token: "",
+                tokenExpiration: 0,
+                status: 2
+            }
+            // throw new Error("invalid credentials")
         }
 
         const token = jwt.sign({userId: user.id, email: user.email}, 'nfbsecretkey', {
             expiresIn: '24h'
         });
+
         return {
             userId: user.id,
             token: token,
-            tokenExpiration: 1
+            tokenExpiration: 1,
+            status: 3
         }
     },
     forgotPassword: async (args, req) => {
@@ -57,18 +71,6 @@ module.exports = {
                     pass: process.env.PASS
                 }
             });
-            
-            // let account = await nodemailer.createTestAccount();
-            // let transporter = await nodemailer.createTransport({
-            //     sendmail: true,
-            //     host: account.smtp.host,
-            //     port: account.smtp.port,
-            //     secure: account.smtp.secure,
-            //     auth: {
-            //         user: account.user,
-            //         pass: account.pass
-            //     }
-            // });
 
             const forgotPasswordEmail = {
                 from: process.env.EMAIL,
@@ -89,3 +91,18 @@ module.exports = {
             }
         }
 }
+
+
+
+
+// let account = await nodemailer.createTestAccount();
+// let transporter = await nodemailer.createTransport({
+//     sendmail: true,
+//     host: account.smtp.host,
+//     port: account.smtp.port,
+//     secure: account.smtp.secure,
+//     auth: {
+//         user: account.user,
+//         pass: account.pass
+//     }
+// });

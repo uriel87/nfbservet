@@ -5,6 +5,7 @@
 
 
 var mongoose = require('mongoose');
+
 config = {
 	mongoUrl: process.env.MONGO_URL
 };
@@ -43,3 +44,7 @@ db.on('disconnected', function() {
 db.on('reconnected', function () {
 	console.info('Mongoose reconnected!');
 });
+
+
+
+// mongoUrl: process.env.MONGO_URL

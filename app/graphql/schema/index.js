@@ -100,10 +100,12 @@ type AuthData {
     userId: ID!
     token: String!
     tokenExpiration: Int!
+    status: Int!
 }
 
 type Message {
     status: Int
+    statusss: Int 
 }
 
 input LoginInput {

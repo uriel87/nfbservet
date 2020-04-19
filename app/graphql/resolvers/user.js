@@ -33,7 +33,14 @@ module.exports = {
         try {
             const userById = await User.findOne({email: req.body.variables.email})
             if(userById) {
-                return new Error("user exsits already")
+                return {
+                    password: null,
+                    userId: "",
+                    token: "",
+                    tokenExpiration: 0,
+                    status: 4
+                }
+                // return new Error("user exsits already")
             }
 
             const hashPassword = await bcrypt.hash(req.body.variables.password,12);
@@ -55,7 +62,8 @@ module.exports = {
                 password: null,
                 userId: userResult.id,
                 token: token,
-                tokenExpiration: 1
+                tokenExpiration: 1,
+                status: 3
             }
             
         } catch(err) {
@@ -64,16 +72,19 @@ module.exports = {
         }
     },
     editUser: async (args, req) => {
-        console.log("editUser - args", args)
-        console.log("editUser - req.body", req.body.variables)
-
         try {
             const emailUser = await User.findOne({email: req.body.variables.email})
-
             if(emailUser) {
-                if((emailUser.email != req.body.variables.email) && emailUser) {
-                    return new Error("user exsits already")
+                console.log(" iinn emailUser", emailUser)
+
+                return {
+                    password: null,
+                    userId: "",
+                    token: "",
+                    tokenExpiration: 0,
+                    status: 4
                 }
+                // return new Error("user exsits already")
             }
 
             userId = req.body.userId
@@ -102,7 +113,8 @@ module.exports = {
                 password: null,
                 userId: userEdited.id,
                 token: token,
-                tokenExpiration: 1
+                tokenExpiration: 1,
+                status: 3
             }
             
         } catch(err) {
@@ -113,10 +125,7 @@ module.exports = {
 }
 
 
-// console.log("getUserDetails - req", req.body.headers.Authorization)
-// console.log("getUserDetails - req.isAuth", req.isAuth)
-// console.log("getUserDetails - req.userId", req.userId)
-// console.log("getUserDetails - args", args)
+
 
 // const user = new User({
 //     name: args.userInput.name.toLowerCase(),
