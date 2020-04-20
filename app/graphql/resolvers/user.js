@@ -83,6 +83,9 @@ module.exports = {
 
 
             if(emailUser.email && (emailUser._id !== userId)) {
+                console.log("iinn emailUser.email",emailUser.email)
+                console.log("iinn emailUser._id",emailUser._id)
+                console.log("iinn userId",userId)
                 return {
                     password: null,
                     userId: "",
