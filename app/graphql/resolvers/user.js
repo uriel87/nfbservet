@@ -77,13 +77,13 @@ module.exports = {
             const emailUser = await User.findOne({email: emailReq})
             userId = req.body.userId
 
-            console.log("emailUser.email",emailUser.email)
+            console.log("emailUser.email",emailUser)
             console.log("emailUser._id",emailUser._id)
             console.log("userId",userId)
 
 
             if(emailUser.email && (emailUser._id !== userId)) {
-                console.log("iinn emailUser.email",emailUser.email)
+                console.log("iinn emailUser.email",emailUser)
                 console.log("iinn emailUser._id",emailUser._id)
                 console.log("iinn userId",userId)
                 return {
