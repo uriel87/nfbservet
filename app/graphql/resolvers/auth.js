@@ -8,7 +8,6 @@ bcrypt = require('bcryptjs')
 
 module.exports = {
     login: async (args, req) => {
-        
         const user = await User.findOne({email: req.body.variables.email.toLowerCase().trim()})
         if(!user) {
             return {

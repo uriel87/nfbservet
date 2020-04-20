@@ -77,6 +77,11 @@ module.exports = {
             const emailUser = await User.findOne({email: emailReq})
             userId = req.body.userId
 
+            console.log("emailUser.email",emailUser.email)
+            console.log("emailUser._id",emailUser._id)
+            console.log("userId",userId)
+
+
             if(emailUser.email && (emailUser._id !== userId)) {
                 return {
                     password: null,
@@ -105,7 +110,7 @@ module.exports = {
             
             const token = jwt.sign({userId: userEdited._id, email: userEdited.email}, process.env.SK, {
                 expiresIn: '1h'
-            });
+            })
 
             return {
                 ...userEdited._doc,
