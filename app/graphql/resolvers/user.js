@@ -82,7 +82,7 @@ module.exports = {
             // console.log("userId",userId)
 
 
-            if(emailUser.email && (emailUser._id !== userId)) {
+            if(emailUser.email && (String(emailUser._id) !== userId)) {
                 console.log("iinn emailUser.email",emailUser)
                 console.log("iinn emailUser._id",emailUser._id)
                 console.log("iinn emailUser._id typeof",typeof String(emailUser._id))
