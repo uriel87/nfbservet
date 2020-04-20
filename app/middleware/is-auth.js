@@ -22,7 +22,7 @@ module.exports = (req, res, next) => {
     let decodedToken
 
     try {
-        decodedToken = jwt.verify(token, 'nfbsecretkey')
+        decodedToken = jwt.verify(token, process.env.SK)
         console.log("decodedToken in Authorization", decodedToken)
 
     } catch(err) {

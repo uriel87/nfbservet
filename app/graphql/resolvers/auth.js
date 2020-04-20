@@ -31,7 +31,7 @@ module.exports = {
             // throw new Error("invalid credentials")
         }
 
-        const token = jwt.sign({userId: user.id, email: user.email}, 'nfbsecretkey', {
+        const token = jwt.sign({userId: user.id, email: user.email}, process.env.SK, {
             expiresIn: '24h'
         });
 

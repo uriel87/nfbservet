@@ -53,7 +53,7 @@ module.exports = {
             });
 
             const userResult = await user.save()
-            const token = jwt.sign({userId: userResult._id, email: userResult.email}, 'nfbsecretkey', {
+            const token = jwt.sign({userId: userResult._id, email: userResult.email}, process.env.SK, {
                 expiresIn: '1h'
             });
 
@@ -75,13 +75,9 @@ module.exports = {
         try {
             const emailReq = req.body.variables.email
             const emailUser = await User.findOne({email: emailReq})
-            console.log("emailReq", emailReq)
-            console.log("emailUser", emailUser)
+            userId = req.body.userId
 
-
-            if(emailUser && (emailUser.email !== emailReq)) {
-                console.log(" iinn emailUser", emailUser)
-
+            if(emailUser.email && (emailUser._id !== userId)) {
                 return {
                     password: null,
                     userId: "",
@@ -91,8 +87,6 @@ module.exports = {
                 }
                 // return new Error("user exsits already")
             }
-
-            userId = req.body.userId
 
             let hashPassword 
             if(req.body.variables.password) {
@@ -109,7 +103,7 @@ module.exports = {
 
             const userEdited = await User.findOneAndUpdate( {_id: mongoose.Types.ObjectId(userId)}, userDetailsEdit, {upsert: true})
             
-            const token = jwt.sign({userId: userEdited._id, email: userEdited.email}, 'nfbsecretkey', {
+            const token = jwt.sign({userId: userEdited._id, email: userEdited.email}, process.env.SK, {
                 expiresIn: '1h'
             });
 
